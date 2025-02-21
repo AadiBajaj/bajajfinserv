@@ -12,10 +12,10 @@ const exercises = [
 
 export default function ExercisePage() {
   return (
-    <div className="h-screen w-full bg-black text-white flex flex-col overflow-hidden">
+    <div className="h-screen w-full bg-purple-100 text-white flex flex-col overflow-hidden">
       {/* Fixed Heading (Centered & Properly Spaced) */}
-      <div className="w-full flex justify-center items-center bg-black py-6 fixed top-[80px] z-10">
-        <h1 className="text-5xl font-extrabold uppercase tracking-widest">
+      <div className="w-full flex justify-center items-center bg-violet-500 py-6 fixed top-[80px] z-10">
+        <h1 className="text-5xl tracking-widest">
           CHOOSE AN EXERCISE
         </h1>
       </div>
@@ -28,7 +28,7 @@ export default function ExercisePage() {
             <motion.div
               key={index}
               whileHover={{ scale: 1.1 }}
-              className="bg-red-500 text-black p-6 rounded-lg shadow-lg flex flex-col items-center justify-center w-36 h-36"
+              className="bg-violet-300 text-black p-6 rounded-lg shadow-lg flex flex-col items-center justify-center w-36 h-36"
             >
               <span className="text-4xl">{exercise.icon}</span>
               <p className="mt-2 font-semibold">{exercise.name}</p>
