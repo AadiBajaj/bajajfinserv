@@ -20,7 +20,7 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="bg-purple-100 flex items-center justify-center min-h-screen">
+        <div className="bg-purple-900 flex items-center justify-center min-h-screen">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-4 text-center text-blue-700">Contact Our Fitness Experts</h2>
                 <p className="text-center text-gray-600 mb-4">Have questions about your fitness journey? Reach out to us!</p>
