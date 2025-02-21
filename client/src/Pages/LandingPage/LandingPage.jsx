@@ -46,7 +46,7 @@ export default function LandingPage() {
         transition={{ duration: 1 }}
         controls
       >
-        <source src="https://media.istockphoto.com/id/2092761195/video/young-man-in-locker-room-drinking-protein.mp4?s=mp4-640x640-is&k=20&c=zUegKaroPT6cyI6pU16uVFCfZlUrCkBK1yyQdAV7c_Q=" type="video/mp4" />
+        <source src="https://cdn.pixabay.com/video/2023/10/20/185802-876514091_large.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </motion.video>
     </div>
