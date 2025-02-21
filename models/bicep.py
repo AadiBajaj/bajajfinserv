@@ -77,10 +77,13 @@ def generate_frames(session_duration):
 
     cap.release()
 
-@app.get("/bicep")
+@app.route('/bicep')
 def video_feed():
-    session_duration = 60  # You can change this dynamically
-    return StreamingResponse(generate_frames(session_duration), media_type="multipart/x-mixed-replace; boundary=frame")
+    try:
+        duration = int(request.args.get('time', 30))  # Default to 30 seconds if not provided
+    except ValueError:
+        duration = 30
+    return Response(generate_frames(duration), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
     import uvicorn
