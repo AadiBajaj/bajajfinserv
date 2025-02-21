@@ -2,10 +2,11 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time
-from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
+from flask import Flask, Response
+from flask_cors import CORS
 
-app = FastAPI()
+app = Flask(__name__)
+CORS(app)
 
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.7)
@@ -81,10 +82,9 @@ def generate_frames():
 
     cap.release()
 
-@app.get("/squat")
+@app.route("/squat")
 def video_feed():
-    return StreamingResponse(generate_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
+    return Response(generate_frames(), mimetype="multipart/x-mixed-replace; boundary=frame")
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
