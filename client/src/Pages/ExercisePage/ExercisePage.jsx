@@ -12,7 +12,7 @@ const exercises = [
 
 export default function ExercisePage() {
   return (
-    <div className="h-screen w-full bg-purple-100 text-white flex flex-col overflow-hidden">
+    <div className="h-screen w-full bg-purple-900 text-white flex flex-col overflow-hidden">
       {/* Fixed Heading (Centered & Properly Spaced) */}
       <div className="w-full flex justify-center items-center bg-violet-500 py-6 fixed top-[80px] z-10">
         <h1 className="text-5xl tracking-widest">
