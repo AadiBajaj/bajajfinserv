@@ -1,29 +1,43 @@
 import React from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 const exercises = [
-  { name: "Squats", icon: "🏋️" },
-  { name: "Shoulder Press", icon: "🏋️" },
-  { name: "Hand Curls", icon: "🏋️" },
-  { name: "Lunges-Left", icon: "🏋️" },
-  { name: "Push-ups", icon: "🏋️" },
-  { name: "Sit-ups", icon: "🏋️" },
+  { name: "bicep", icon: "🏋️" },
+  { name: "shoulderpress", icon: "🏋️" },
+  { name: "pushup", icon: "🏋️" },
+  { name: "squat", icon: "🏋️" },
+ 
 ];
 
 export default function ExercisePage() {
+  const openExerciseWindow = async (exerciseName) => {
+    try {
+      // Construct dynamic API endpoint
+      const apiUrl = `http://localhost:5000/${exerciseName.toLowerCase().replace(/\s+/g, "-")}`;
+      
+      // Call the Flask API
+      const response = await axios.post(apiUrl, { exercise: exerciseName });
+      console.log("Response:", response.data);
+
+      // Open Flask API response URL in a new tab
+      // window.open(apiUrl, "_blank");
+    } catch (error) {
+      console.error("Error calling API:", error);
+    }
+  };
+
   return (
     <div className="h-screen w-full bg-purple-100 text-white flex flex-col overflow-hidden">
-      {/* Fixed Heading (Centered & Properly Spaced) */}
+      {/* Fixed Heading */}
       <div className="w-full flex justify-center items-center bg-violet-500 py-6 fixed top-[80px] z-10">
-        <h1 className="text-5xl tracking-widest">
-          CHOOSE AN EXERCISE
-        </h1>
+        <h1 className="text-5xl tracking-widest">CHOOSE AN EXERCISE</h1>
       </div>
 
-      {/* Main Content: Grid and Image */}
+      {/* Main Content */}
       <div className="flex flex-grow items-center justify-center gap-12 mt-20">
         {/* Exercises Grid */}
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 gap-8">
           {exercises.map((exercise, index) => (
             <motion.div
               key={index}
@@ -32,6 +46,14 @@ export default function ExercisePage() {
             >
               <span className="text-4xl">{exercise.icon}</span>
               <p className="mt-2 font-semibold">{exercise.name}</p>
+              <a href={`http://localhost:5000/${exercise.name.toLowerCase().replace(/\s+/g, "-")}`} target="_blank">
+              <button
+                className="mt-2 px-4 py-1 bg-violet-600 text-white rounded-lg text-sm"
+                // onClick={() => openExerciseWindow(exercise.name)}
+              >
+                Start
+              </button>
+              </a>
             </motion.div>
           ))}
         </div>
