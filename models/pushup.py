@@ -1,9 +1,10 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+import time
 
 mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.7)
+pose = mp_pose.Pose(min_detection_confidence=0.8, min_tracking_confidence=0.8)
 mp_drawing = mp.solutions.drawing_utils
 
 def calculate_angle(a, b, c):
@@ -12,8 +13,7 @@ def calculate_angle(a, b, c):
     cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
     return np.degrees(np.arccos(np.clip(cosine_angle, -1.0, 1.0)))
 
-def track_pushups(frame):
-    frame = cv2.resize(frame, (640, 480))
+def track_pushups(frame, pushup_count=[0], stage=['up']):
     image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = pose.process(image)
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
@@ -34,6 +34,15 @@ def track_pushups(frame):
         right_pushup_angle = calculate_angle(right_shoulder, right_elbow, right_wrist)
         avg_pushup_angle = (left_pushup_angle + right_pushup_angle) / 2
 
-        cv2.putText(image, f'Angle: {int(avg_pushup_angle)}', (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+        if avg_pushup_angle < 50 and stage[0] != "down":
+            stage[0] = "down"
+
+        if avg_pushup_angle > 170 and stage[0] == "down":
+            pushup_count[0] += 1
+            stage[0] = "up"
+
+        cv2.putText(image, f'Push-ups: {pushup_count[0]}', (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(image, f'Angle: {int(avg_pushup_angle)}', (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+        cv2.putText(image, f'Stage: {stage[0]}', (30, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
     
     return image

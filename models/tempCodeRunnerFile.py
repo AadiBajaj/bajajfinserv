@@ -3,9 +3,10 @@ import cv2
 import threading
 
 # Import your exercise tracking scripts
-import bicep_curls
+import bicep
 import pushup
 import squat
+import shoulderpress
 
 app = Flask(__name__)
 
@@ -28,9 +29,9 @@ def generate_frames(exercise_function):
     cap.release()
 
 # Route for Bicep Curls
-@app.route('/bicep_curls')
+@app.route('/bicep')
 def video_feed_bicep_curls():
-    return Response(generate_frames(bicep_curls.track_bicep_curls),
+    return Response(generate_frames(bicep.track_bicep_curls),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # Route for Push-ups
@@ -43,6 +44,12 @@ def video_feed_pushups():
 @app.route('/squat')
 def video_feed_squats():
     return Response(generate_frames(squat.track_squats),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# Route for Shoulder Press
+@app.route('/shoulderpress')
+def video_feed_shoulder():
+    return Response(generate_frames(shoulderpress.track_shoulder_press),  
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # Run Flask application
