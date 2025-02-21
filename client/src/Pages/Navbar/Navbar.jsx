@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import UserMenu from "./UserMenu";
-import { getProfile } from "../../services/profileService";
 
 const Navbar = ({ handleLoginPopup, user, setUser }) => {
   const location = useLocation();
@@ -19,8 +18,8 @@ const Navbar = ({ handleLoginPopup, user, setUser }) => {
         {/* Logo */}
         <Link to="/">
           <div className="logo">
-            <img src="./assets/paws4home_logo.png" alt="Logo" className="logo-image" />
-            <span>Paws4Home</span>
+            <img src="./assets/logo.gif" alt="Logo" className="logo-image" />
+            <span>साहस Shakti</span>
           </div>
         </Link>
 
@@ -31,11 +30,10 @@ const Navbar = ({ handleLoginPopup, user, setUser }) => {
 
         {/* Navigation Links */}
         <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-          <li><Link to="/adopt" onClick={() => setIsMenuOpen(false)}>Adopt</Link></li>
-          <li><Link to="/rehome" onClick={() => setIsMenuOpen(false)}>Rehome</Link></li>
-          <li><Link to="/pet-store" onClick={() => setIsMenuOpen(false)}>Store</Link></li>
-          <li><Link to="/about" onClick={() => setIsMenuOpen(false)}>About Us</Link></li>
-          <li><Link to="/care-guide" onClick={() => setIsMenuOpen(false)}>Care Guide</Link></li>
+          <li><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/exercises" onClick={() => setIsMenuOpen(false)}>Exercises</Link></li>
+          <li><Link to="/leaderboard" onClick={() => setIsMenuOpen(false)}>LeaderBoard</Link></li>
+          <li><Link to="/contactUs" onClick={() => setIsMenuOpen(false)}>Contact Us</Link></li>
 
           
         </ul>

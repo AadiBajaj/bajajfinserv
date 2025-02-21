@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Pages/Navbar/Navbar";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import LoginPopup from "./Pages/LoginSignUp/loginPopUp";
+import UpdateProfile from "./Pages/UpdateProfile/UpdateProfile";
 
 
 const App = () => {
@@ -40,6 +41,9 @@ const App = () => {
         <main>
           <Routes>
             <Route path="/" element={<LandingPage/>} />
+            <Route path="/profile" element={<UpdateProfile />} />
+
+
           </Routes>
         </main>
         {/* <Footer /> */}
