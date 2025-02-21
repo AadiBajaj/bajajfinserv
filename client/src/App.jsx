@@ -47,7 +47,6 @@ const App = () => {
             <Route path="/exercises" element={<ExercisePage />} />
             <Route path="/contactUs" element={<ContactPage />} />
 
-
           </Routes>
         </main>
         {/* <Footer /> */}
