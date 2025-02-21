@@ -6,6 +6,7 @@ import Navbar from "./Pages/Navbar/Navbar";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import LoginPopup from "./Pages/LoginSignUp/loginPopUp";
 import UpdateProfile from "./Pages/UpdateProfile/UpdateProfile";
+import ExercisePage from "./Pages/ExercisePage/ExercisePage";
 
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LandingPage/>} />
             <Route path="/profile" element={<UpdateProfile />} />
+            <Route path="/exercises" element={<ExercisePage />} />
 
 
           </Routes>
