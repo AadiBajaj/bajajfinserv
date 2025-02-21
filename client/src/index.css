@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Sriracha&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --primary-color: #4335A7;
+  --primary-light: #5446c7;
+  --primary-dark: #362a85;
+  
+  /* Secondary Colors */
+  --secondary-color: #80C4E9;
+  --secondary-light: #a3d5f0;
+  --secondary-dark: #5da5d1;
+  
+  /* Background Colors */
+  --background-color: #FFF6E9;
+  --background-light: #ffffff;
+  --background-dark: #f5e6d1;
+  
+  /* Accent/CTA Colors */
+  --accent-color: #FF7F3E;
+  --accent-light: #ff9661;
+  --accent-dark: #e66526;
+  
+  /* Text Colors */
+  --text-primary: #2D2D2D;
+  --text-secondary: #4A4A4A;
+  --text-light: #FFFFFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Common Button Styles */
+.primary-button {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  transition: background-color 0.3s ease;
+}
+
+.primary-button:hover {
+  background-color: var(--primary-light);
+}
+
+.secondary-button {
+  background-color: var(--secondary-color);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease;
+}
+
+.secondary-button:hover {
+  background-color: var(--secondary-light);
+}
+
+.accent-button {
+  background-color: var(--accent-color);
+  color: var(--text-light);
+  transition: background-color 0.3s ease;
+}
+
+.accent-button:hover {
+  background-color: var(--accent-light);
+}
+
+@layer base {
+  .input {
+    @apply border border-gray-400 w-full rounded-full py-[3px] outline-none px-4 focus:ring-1 focus:ring-inset focus:ring-blue-200;
+  }
+
+  .input-label {
+    @apply text-gray-700 block pb-1;
+  }
+
+  .transition-200 {
+    @apply transition duration-200 ease-in-out;
+  }
+}
+
+.disable-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
