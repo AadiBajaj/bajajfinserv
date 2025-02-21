@@ -1,15 +1,54 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-const LandingPage = () => {
+export default function LandingPage() {
   return (
-    <div>
-      <div className="flex items-center justify-center h-screen">
-        <h1 className="text-4xl font-bold text-center text-gray-800">
-          Flex-It-Up
+    <div className="h-screen w-full bg-purple-100 text-blue-300 flex flex-col items-center justify-center gap-y-10">
+      {/* Hero Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-center max-w-xl"
+      >
+        <h1 className="text-6xl font-extrabold uppercase tracking-widest">
+          Flex It Out
         </h1>
-      </div>
+        <p className="text-lg text-yellow-900 mt-4">
+          Get stronger, fitter, and healthier with us!
+        </p>
+
+        {/* Call to Action Buttons */}
+        <div className="mt-8 flex justify-center gap-6">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="px-6 py-3 bg-red-600 text-white font-bold text-lg rounded-lg shadow-lg hover:bg-red-700 transition"
+          >
+            Get Started
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="px-6 py-3 border border-white text-white font-bold text-lg rounded-lg hover:bg-white hover:text-black transition"
+          >
+            Learn More
+          </motion.button>
+        </div>
+      </motion.div>
+
+      {/* Video Section */}
+      <motion.video
+        className="w-80 mx-auto rounded-lg shadow-xl"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1 }}
+        controls
+      >
+        <source src="https://media.istockphoto.com/id/2092761195/video/young-man-in-locker-room-drinking-protein.mp4?s=mp4-640x640-is&k=20&c=zUegKaroPT6cyI6pU16uVFCfZlUrCkBK1yyQdAV7c_Q=" type="video/mp4" />
+        Your browser does not support the video tag.
+      </motion.video>
     </div>
   );
-};
-
-export default LandingPage;
+}
