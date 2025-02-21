@@ -32,7 +32,7 @@ const Navbar = ({ handleLoginPopup, user, setUser }) => {
         <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <li><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
           <li><Link to="/exercises" onClick={() => setIsMenuOpen(false)}>Exercises</Link></li>
-          <li><Link to="/leaderboard" onClick={() => setIsMenuOpen(false)}>LeaderBoard</Link></li>
+          {/* <li><Link to="/leaderboard" onClick={() => setIsMenuOpen(false)}>LeaderBoard</Link></li> */}
           <li><Link to="/contactUs" onClick={() => setIsMenuOpen(false)}>Contact Us</Link></li>
 
           
