@@ -2,8 +2,8 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time
-from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
+from fastapi import FastAPI, Response, Query
+from starlette.responses import StreamingResponse
 
 app = FastAPI()
 
@@ -17,7 +17,7 @@ def calculate_angle(a, b, c):
     cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
     return np.degrees(np.arccos(np.clip(cosine_angle, -1.0, 1.0)))
 
-def generate_frames(session_duration):
+def generate_frames(session_duration: int):
     cap = cv2.VideoCapture(0)
     cap.set(3, 640)
     cap.set(4, 480)
@@ -57,35 +57,39 @@ def generate_frames(session_duration):
             right_curl_angle = calculate_angle(right_shoulder, right_elbow, right_wrist)
             avg_curl_angle = (left_curl_angle + right_curl_angle) / 2
 
-            if avg_curl_angle > 165:
+            left_wrist_below_elbow = left_wrist[1] > left_elbow[1]
+            right_wrist_below_elbow = right_wrist[1] > right_elbow[1]
+            arms_fully_extended = avg_curl_angle > 165 and left_wrist_below_elbow and right_wrist_below_elbow
+            arms_fully_contracted = avg_curl_angle < 45
+
+            if arms_fully_extended and stage != "down":
                 stage = "down"
-            if avg_curl_angle < 45 and stage == "down":
+            if arms_fully_contracted and stage == "down":
                 stage = "up"
                 curl_count += 1
 
-            time_display = f"Time: {int(elapsed_time // 60):02}:{int(elapsed_time % 60):02}"
+            minutes = int(elapsed_time) // 60
+            seconds = int(elapsed_time) % 60
+            time_display = f"Time: {minutes:02}:{seconds:02}"
+
             cv2.putText(image, f'Bicep Curls: {curl_count}', (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             cv2.putText(image, f'Angle: {int(avg_curl_angle)}', (30, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
             cv2.putText(image, time_display, (30, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
         ret, buffer = cv2.imencode('.jpg', image)
         frame = buffer.tobytes()
+
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-        time.sleep(0.03)
+        time.sleep(0.03)  # Prevents high CPU usage
 
     cap.release()
 
-@app.route('/bicep')
-def video_feed():
-    try:
-        duration = int(request.args.get('time', 30))  # Default to 30 seconds if not provided
-    except ValueError:
-        duration = 30
-    return Response(generate_frames(duration), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.get("/bicep")
+async def video_feed(time: int = Query(30, description="Workout duration in seconds")):
+    return StreamingResponse(generate_frames(time), media_type="multipart/x-mixed-replace; boundary=frame")
 
 if __name__ == "__main__":
     import uvicorn
-    session_duration = int(input("Enter workout duration in seconds: "))  # Ask duration at the start
     uvicorn.run(app, host="0.0.0.0", port=8000)
