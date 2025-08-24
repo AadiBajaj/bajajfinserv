@@ -1,7 +1,6 @@
 import cv2
 import mediapipe as mp
 import numpy as np
-import time
 
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(min_detection_confidence=0.8, min_tracking_confidence=0.8)
